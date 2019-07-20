@@ -5,6 +5,9 @@ var path = require("path");
 var logger = require("morgan");
 var mongoose = require("mongoose");
 
+require('dotenv').config()
+
+
 var Article = require("./models/Article.js");
 var Note = require("./models/Note.js");
 
@@ -23,6 +26,9 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(express.static("public"));
+app.use('/public/assets',express.static(__dirname +'/public/assets'));
+app.use('/public/images',express.static(__dirname +'/public/images'));
+
 
 var exphbs = require("express-handlebars");
 
@@ -33,8 +39,13 @@ app.engine("handlebars", exphbs({
 app.set("view engine", "handlebars");
 
 // Connection to mongoose
-mongoose.connect("mongodb://localhost/MongoHomework");
+// mongoose.connect("mongodb://localhost/MongoHomework");
+
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/MongoHomework";
+
+mongoose.connect(MONGODB_URI);
 var db = mongoose.connection;
+
 
 db.on("error", function(error) {
   console.log("Error with Mongoose: ", error);

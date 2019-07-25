@@ -28,6 +28,7 @@ app.use(bodyParser.urlencoded({
 app.use(express.static("public"));
 app.use('/public/assets',express.static(__dirname +'/public/assets'));
 app.use('/public/images',express.static(__dirname +'/public/images'));
+app.use('/public/js',express.static(__dirname +'/public/js'));
 
 
 var exphbs = require("express-handlebars");
